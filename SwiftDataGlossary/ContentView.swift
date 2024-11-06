@@ -19,17 +19,22 @@ struct ContentView: View {
                 .font(.largeTitle)
             
             List {
-                Text("SwiftUI")
-                Text("RealityKit")
+                Text("Word1")
+                Text("Word2")
+                Text("Word3")
+                Text("Word4")
             }
             
             Button("Add") {
                 isAddNewWordViewShowing = true
             }
         }
-        .sheet(isPresented: $isAddNewWordViewShowing, content: {
-            EmptyView()
-        })
+        .sheet(
+            isPresented:
+                $isAddNewWordViewShowing,
+            content: {
+                AddNewWordView()
+            })
         .padding(20)
     }
 }
