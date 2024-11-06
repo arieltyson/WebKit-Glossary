@@ -2,7 +2,7 @@
 
 ## Project Description 🎨
 
-This project allows users to keep track of new words they encounter and don't yet understand, providing access to trusted resources where they can increase their knowledge of the English language using Safari + WebKit with an immersive learning environment (VisionOS) 🥽
+This project allows users to keep track of new words they encounter and don't yet understand, providing access to trusted resources where they can increase their knowledge of the English language using `Safari` + `WebKit` with an immersive learning environment (VisionOS) 🥽
 
 <img src="https://github.com/user-attachments/assets/9b678a50-24f8-418e-9605-1ec809a45502" alt="VisionOSDictionary" width="400" height="400" />
 
