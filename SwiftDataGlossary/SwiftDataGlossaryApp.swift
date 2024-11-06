@@ -13,7 +13,17 @@ struct SwiftDataGlossaryApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .modelContainer(for: [WordDataModel.self])
+        }
+        .modelContainer(for: [WordDataModel.self])
+        
+        WindowGroup(
+            id:
+                "WebViewWindow",
+            for:
+                URL.self
+        ) {
+            $url in
+            WebView(url: $url.wrappedValue!)
         }
     }
 }

@@ -9,6 +9,7 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 import SwiftData
+import WebKit
 
 struct ContentView: View {
     
@@ -50,6 +51,7 @@ struct ContentView: View {
 struct ListRow: View {
     
     @Bindable var wordItem: WordDataModel
+    @Environment(\.openWindow) var openWindow
     
     var body: some View {
         HStack {
@@ -58,17 +60,22 @@ struct ListRow: View {
             
             Spacer()
             
-            Toggle(
-                "",
-                systemImage:
-                    "checkmark",
-                isOn:
-                    $wordItem.status
-            )
-                .toggleStyle(.button)
+            Button(action: {
+                let url = urlForWord(wordItem.name)
+                openWindow(id: "WebViewWindow", value: url)
+            }) {
+                Image(systemName: "checkmark")
+            }
+            .buttonStyle(.borderless)
         }
     }
-}
+    
+    func urlForWord(_ word: String) -> URL {
+        let encodedWord = word.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? word
+                let urlString = "https://www.dictionary.com/browse/\(encodedWord)"
+                return URL(string: urlString)!
+            }
+        }
 
 #Preview(windowStyle: .automatic) {
     
