@@ -8,21 +8,29 @@
 import SwiftUI
 import RealityKit
 import RealityKitContent
+import SwiftData
 
 struct ContentView: View {
     
     @State var isAddNewWordViewShowing: Bool = false
+    @Query var wordItems: [WordDataModel]
+    @Environment(\.modelContext) var modelContext
     
     var body: some View {
         VStack {
             Text("Glossary App")
-                .font(.largeTitle)
+                .font(.extraLargeTitle)
             
             List {
-                Text("Word1")
-                Text("Word2")
-                Text("Word3")
-                Text("Word4")
+                ForEach(wordItems) { wordItem in
+                    ListRow(wordItem: wordItem)
+                }
+                .onDelete(perform: { indexSet in
+                    for index in indexSet {
+                        let itemToDelete = wordItems[index]
+                        modelContext.delete(itemToDelete)
+                    }
+                })
             }
             
             Button("Add") {
@@ -35,10 +43,47 @@ struct ContentView: View {
             content: {
                 AddNewWordView()
             })
-        .padding(20)
+        .padding(100)
+    }
+}
+
+struct ListRow: View {
+    
+    @Bindable var wordItem: WordDataModel
+    
+    var body: some View {
+        HStack {
+            Text(wordItem.name)
+                .font(.title)
+            
+            Spacer()
+            
+            Toggle(
+                "",
+                systemImage:
+                    "checkmark",
+                isOn:
+                    $wordItem.status
+            )
+                .toggleStyle(.button)
+        }
     }
 }
 
 #Preview(windowStyle: .automatic) {
+    
+    let configuration = ModelConfiguration(
+        isStoredInMemoryOnly:
+            true
+    )
+    
+    let container = try! ModelContainer(
+        for:
+            WordDataModel.self,
+        configurations:
+            configuration
+    )
+    
     ContentView()
+        .modelContainer(container)
 }
